@@ -75,15 +75,39 @@ final class User: Model, @unchecked Sendable, Content {
     
     @Children(for: \.$user) var diets: [Diet]
     @Children(for: \.$user) var meals: [Meal]
+    @Children(for: \.$user) var physiqueActivitys: [PhysiqueActivity]
+    @Children(for: \.$user) var weights: [Weight]
+    @OptionalChild(for: \.$user) var weightObj: WeightObjectif?
     
     
 
     init() {}
     
     
-//    func toDTO() -> UserResponseDTO{
-//        return UserResponseDTO(
-//            
-//        )
-//    }
+    func toDTO() -> UserResponseDTO{
+        
+        let age = Calendar.current.dateComponents([.year], from: self.birthday, to: Date()).year ?? 0
+        //permet de récuperer que l'âge de l'user
+
+        return UserResponseDTO(
+            id: self.id ?? UUID(),
+            lastname: self.lastname,
+            firstname: self.firstname,
+            email: self.email,
+            age: age,
+            profil_picture: self.profil_picture,
+            weight: self.weight,
+            height: self.height,
+            notifHour: self.notifHour,
+            typeWeightObj: self.typeWeightObj,
+            sportObj: self.sportObj,
+            calburnobj: self.calburnobj,
+            timingCal: self.timingCal,
+            startDate: self.startDate,
+            finalDate: self.finalDate,
+            timingTraining: self.timingTraining,
+            nbTraining: self.nbTraining,
+            trainingDuration: self.trainingDuration,
+            calByDay: self.calByDay)
+    }
 }

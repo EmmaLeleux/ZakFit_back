@@ -32,14 +32,19 @@ final class Ingredient: Model, @unchecked Sendable, Content {
     @Field(key: "unit")
     var unit: String
     
-
-
+    @Siblings(through: IngredientMeal.self, from: \.$ingredient, to: \.$meal)
+    var meals: [Meal]
+    
     init() {}
     
     
-//    func toDTO() -> UserResponseDTO{
-//        return UserResponseDTO(
-//
-//        )
-//    }
+    func toDTO() -> IngredientResponseDTO{
+        return IngredientResponseDTO(
+            name: name,
+            cal: cal,
+            carbonhydrate: carbonhydrate,
+            protein: protein,
+            glucide: glucide,
+            unit: unit)
+    }
 }

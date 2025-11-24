@@ -24,16 +24,18 @@ final class Meal: Model, @unchecked Sendable, Content {
     @Parent(key: "user_id")
     var user: User
     
-  
+    @Siblings(through: IngredientMeal.self, from: \.$meal, to: \.$ingredient)
+    var ingredients: [Ingredient]
     
     
 
     init() {}
     
     
-//    func toDTO() -> UserResponseDTO{
-//        return UserResponseDTO(
-//
-//        )
-//    }
+    func toDTO() -> MealResponseDTO{
+        return MealResponseDTO(
+            id: id ?? UUID(),
+            type: type,
+            date: date)
+    }
 }

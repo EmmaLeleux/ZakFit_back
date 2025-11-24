@@ -27,9 +27,9 @@ final class Diet: Model, @unchecked Sendable, Content {
     init() {}
     
     
-//    func toDTO() -> UserResponseDTO{
-//        return UserResponseDTO(
-//
-//        )
-//    }
+    func toDTO() -> DietResponseDTO{
+        return DietResponseDTO(
+            id: id ?? UUID(),
+            name: name)
+    }
 }
