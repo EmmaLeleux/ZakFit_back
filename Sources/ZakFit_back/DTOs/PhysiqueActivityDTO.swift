@@ -18,7 +18,7 @@ struct CreatePhysiqueActivityDTO: Codable {
 
 
 struct PhysiqueActivityResponseDTO: Codable {
-    var id: String
+    var id: UUID
     var sport: String
     var date: Date
     var cal: Int

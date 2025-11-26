@@ -37,21 +37,21 @@ struct CreateUserDTO: Content{
         model.firstname = firstname
         model.email = email
         model.password = password
-        model.birthday = birthday
-        model.profil_picture = profil_picture
-        model.weight = weight
-        model.height = height
-        model.notifHour = notifHour
-        model.typeWeightObj = typeWeightObj
-        model.sportObj = sportObj
-        model.calburnobj = calburnobj
-        model.timingCal = timingCal
-        model.startDate = startDate
-        model.finalDate = finalDate
-        model.timingTraining = timingTraining
-        model.nbTraining = nbTraining
-        model.trainingDuration = trainingDuration
-        model.calByDay = calByDay
+        model.birthday = Date.now
+        model.profil_picture = "https://i.ibb.co/8LBChdjz/User-avatar-svg.png"
+        model.weight = 70
+        model.height = 160
+        model.notifHour = Date.now
+        model.typeWeightObj = "perdre du poids"
+        model.sportObj = "Equitation"
+        model.calburnobj = 1000
+        model.timingCal = "semaine"
+        model.startDate = Date.now
+        model.finalDate = Date().addingTimeInterval(7 * 24 * 3600)
+        model.timingTraining = "semaine"
+        model.nbTraining = 0
+        model.trainingDuration = 30
+        model.calByDay = 1000
         return model
     }
     

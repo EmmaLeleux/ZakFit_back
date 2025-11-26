@@ -10,6 +10,12 @@ import Vapor
 
 struct CreateDietDTO: Content{
     var name: String
+    
+    func toModel() -> Diet {
+        let model = Diet()
+        model.name = name
+        return model
+    }
 }
 
 

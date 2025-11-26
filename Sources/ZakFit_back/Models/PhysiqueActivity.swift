@@ -37,9 +37,12 @@ final class PhysiqueActivity: Model, @unchecked Sendable, Content {
     init() {}
     
     
-//    func toDTO() -> UserResponseDTO{
-//        return UserResponseDTO(
-//
-//        )
-//    }
+    func toDTO() -> PhysiqueActivityResponseDTO{
+        return PhysiqueActivityResponseDTO(
+            id: id ?? UUID(),
+            sport: sport,
+            date: date,
+            cal: cal,
+            duration: duration)
+    }
 }

@@ -13,6 +13,13 @@ struct CreateWeightDTO: Content{
     var weight: Double
     var date: Date
     
+    
+    func toModel() -> Weight {
+        let model = Weight()
+        model.date = date
+        model.weight = weight
+        return model
+    }
 }
 
 struct WeightResponseDTO: Content{

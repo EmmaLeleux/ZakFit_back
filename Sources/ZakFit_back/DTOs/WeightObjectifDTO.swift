@@ -16,7 +16,7 @@ struct CreateWeightObjectif: Content{
     var finalDate: Date
 }
 
-struct WeightObjectifResponse: Content{
+struct WeightObjectifResponseDTO: Content{
     var id: UUID?
     var weightObjectif: Double
     var timing: String
