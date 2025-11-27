@@ -13,6 +13,14 @@ struct CreateMealDTO: Content{
     var type: String
     var date: Date
     
+    func toModel() -> Meal {
+        let model = Meal()
+        
+        model.type = type
+        model.date = date
+        return model
+        
+    }
 }
 
 struct MealResponseDTO: Content {

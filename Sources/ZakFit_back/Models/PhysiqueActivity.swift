@@ -25,7 +25,7 @@ final class PhysiqueActivity: Model, @unchecked Sendable, Content {
     var cal: Int
     
     @Field(key: "duration")
-    var duration: Date
+    var duration: Int
     
     @Parent(key: "user_id")
     var user: User

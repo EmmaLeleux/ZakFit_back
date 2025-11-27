@@ -10,7 +10,7 @@ import Vapor
 
 
 struct CreateIngredientMealDTO: Content{
-    var quandtity: Int
+    var quantity: Int
     var mealId: UUID
     var ingredientId: UUID
     
@@ -19,6 +19,7 @@ struct CreateIngredientMealDTO: Content{
         model.id = UUID()
         model.meal.id = mealId
         model.ingredient.id = ingredientId
+        model.quantity = quantity
         
         return model
     }

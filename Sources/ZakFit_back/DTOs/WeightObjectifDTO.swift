@@ -9,11 +9,21 @@
 import Fluent
 import Vapor
 
-struct CreateWeightObjectif: Content{
+struct CreateWeightObjectifDTO: Content{
     var weightObjectif: Double
     var timing: String
     var startDate: Date
     var finalDate: Date
+    
+    func toModel() -> WeightObjectif {
+        let model = WeightObjectif()
+        model.weight = weightObjectif
+        model.timing = timing
+        model.startDate = startDate
+        model.finalDate = finalDate
+        
+        return model
+    }
 }
 
 struct WeightObjectifResponseDTO: Content{

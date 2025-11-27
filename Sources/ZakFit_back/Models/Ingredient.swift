@@ -40,6 +40,7 @@ final class Ingredient: Model, @unchecked Sendable, Content {
     
     func toDTO() -> IngredientResponseDTO{
         return IngredientResponseDTO(
+            id: id ?? UUID(),
             name: name,
             cal: cal,
             carbonhydrate: carbonhydrate,

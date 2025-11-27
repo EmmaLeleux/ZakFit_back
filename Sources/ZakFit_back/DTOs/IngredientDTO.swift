@@ -32,6 +32,7 @@ struct CreateIngredientDTO: Content{
 
 
 struct IngredientResponseDTO: Content {
+    var id: UUID
     var name: String
     var cal: Int
     var carbonhydrate: Int

@@ -1,8 +1,8 @@
 //
-//  WeightDTO.swift
+//  WeightObjectifController.swift
 //  ZakFit_back
 //
-//  Created by Emma on 25/11/2025.
+//  Created by Emma on 26/11/2025.
 //
 
 import Fluent
@@ -10,11 +10,11 @@ import Vapor
 import JWT
 
 
-struct WeightController: RouteCollection {
+struct WeightObjectifController: RouteCollection {
     
     
     func boot(routes: any RoutesBuilder) throws {
-        let user = routes.grouped("weight")
+        let user = routes.grouped("weight-objectif")
         
         
         //routes privées
@@ -28,10 +28,10 @@ struct WeightController: RouteCollection {
     
     
     @Sendable
-    func createWeight(req: Request) async throws -> WeightResponseDTO {
+    func createWeight(req: Request) async throws -> WeightObjectifResponseDTO {
         let payload = try req.auth.require(UserPayload.self)
         
-        let weight = try req.content.decode(CreateWeightDTO.self).toModel()
+        let weight = try req.content.decode(CreateWeightObjectifDTO.self).toModel()
         
         weight.$user.id = payload.id
         
@@ -41,10 +41,10 @@ struct WeightController: RouteCollection {
     }
     
     @Sendable
-    func getWeightsByUser(req: Request) async throws -> [WeightResponseDTO] {
+    func getWeightsByUser(req: Request) async throws -> [WeightObjectifResponseDTO] {
         let payload = try req.auth.require(UserPayload.self)
 
-        let weights = try await Weight.query(on: req.db)
+        let weights = try await WeightObjectif.query(on: req.db)
             .filter(\.$user.$id == payload.id)
             .all()
         
@@ -55,7 +55,7 @@ struct WeightController: RouteCollection {
     func deleteWeight(req: Request) async throws -> HTTPStatus {
         try req.auth.require(UserPayload.self)
         
-        guard let weight = try await Weight.find(req.parameters.get("id"), on: req.db) else {
+        guard let weight = try await WeightObjectif.find(req.parameters.get("id"), on: req.db) else {
             throw Abort(.notFound)
         }
         

@@ -32,6 +32,18 @@ public func configure(_ app: Application) async throws {
         database: Environment.get("DATABASE_NAME") ?? "ZakFitDB"
     ), as: .mysql)
 
+    
+    let corsConfiguration = CORSMiddleware.Configuration(
+//        allowedOrigin: .custom("mettre le bon domaine"),
+        allowedOrigin: .all,
+        allowedMethods: [.GET, .POST, .PUT, .PATCH, .DELETE, .OPTIONS],
+        allowedHeaders: [.accept, .authorization, .contentType, .origin],
+        cacheExpiration: 5
+    )
+    
+    let cors = CORSMiddleware(configuration: corsConfiguration)
+    app.middleware.use(cors)
+    
     app.migrations.add(UserMigration())
     app.migrations.add(WeightMigration())
     app.migrations.add(WeightObjectifMigration())
@@ -40,6 +52,7 @@ public func configure(_ app: Application) async throws {
     app.migrations.add(IngredientMigration())
     app.migrations.add(IngredientMealMigration())
     app.migrations.add(DietMigration())
+    app.migrations.add(PhysiqueActivityDurationIntMigration())
     try await app.autoMigrate()
     // register routes
     try routes(app)

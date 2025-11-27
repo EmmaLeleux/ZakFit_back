@@ -9,18 +9,27 @@ import Fluent
 import Vapor
 
 
-struct CreatePhysiqueActivityDTO: Codable {
+struct CreatePhysiqueActivityDTO: Content{
     var sport: String
     var date: Date
     var cal: Int
-    var duration: Date
+    var duration: Int
+    
+    func toModel() -> PhysiqueActivity {
+        let model = PhysiqueActivity()
+        model.sport = sport
+        model.date = date
+        model.cal = cal
+        model.duration = duration
+        return model
+    }
 }
 
 
-struct PhysiqueActivityResponseDTO: Codable {
+struct PhysiqueActivityResponseDTO: Content {
     var id: UUID
     var sport: String
     var date: Date
     var cal: Int
-    var duration: Date
+    var duration: Int
 }

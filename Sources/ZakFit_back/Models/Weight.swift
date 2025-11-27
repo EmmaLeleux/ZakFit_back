@@ -29,9 +29,10 @@ final class Weight: Model, @unchecked Sendable, Content {
     init() {}
     
     
-//    func toDTO() -> UserResponseDTO{
-//        return UserResponseDTO(
-//
-//        )
-//    }
+    func toDTO() -> WeightResponseDTO{
+        return WeightResponseDTO(
+            id: id ?? UUID(),
+            weight: weight,
+            date: date)
+    }
 }

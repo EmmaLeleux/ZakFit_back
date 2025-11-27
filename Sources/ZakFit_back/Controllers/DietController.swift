@@ -21,6 +21,7 @@ struct DietController: RouteCollection {
         let protectedRoutes = user.grouped(JWTMiddleware())
         protectedRoutes.post(use: self.createDiet)
         protectedRoutes.delete(":id", use: deleteDiet)
+        protectedRoutes.get(use: self.getDietsByUser)
    
         
     }
@@ -36,6 +37,18 @@ struct DietController: RouteCollection {
         try await diet.save(on: req.db)
         
         return diet.toDTO()
+    }
+    
+    
+    @Sendable
+    func getDietsByUser(req: Request) async throws -> [DietResponseDTO] {
+        let payload = try req.auth.require(UserPayload.self)
+
+        let diets = try await Diet.query(on: req.db)
+            .filter(\.$user.$id == payload.id)
+            .all()
+        
+        return diets.map{$0.toDTO()}
     }
     
     /// delete a diet
