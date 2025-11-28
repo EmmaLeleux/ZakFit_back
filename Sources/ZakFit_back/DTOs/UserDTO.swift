@@ -14,21 +14,6 @@ struct CreateUserDTO: Content{
     var firstname: String
     var email: String
     var password: String
-    var birthday: Date
-    var profil_picture: String
-    var weight: Double
-    var height: Int
-    var notifHour: Date
-    var typeWeightObj: String
-    var sportObj: String
-    var calburnobj: Int
-    var timingCal: String
-    var startDate: Date
-    var finalDate: Date
-    var timingTraining: String
-    var nbTraining: Int
-    var trainingDuration: Int
-    var calByDay: Int
     
     func toModel() -> User {
         let model = User()
