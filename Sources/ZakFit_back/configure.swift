@@ -53,6 +53,7 @@ public func configure(_ app: Application) async throws {
     app.migrations.add(IngredientMealMigration())
     app.migrations.add(DietMigration())
     app.migrations.add(PhysiqueActivityDurationIntMigration())
+    app.migrations.add(UserPt2Migration())
     try await app.autoMigrate()
     // register routes
     try routes(app)

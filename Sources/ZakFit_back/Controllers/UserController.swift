@@ -122,6 +122,14 @@ struct UserController: RouteCollection {
             user.profil_picture = newProfilPicture
         }
         
+        if let newBirthday = updatedUser.birthday{
+            user.birthday = newBirthday
+        }
+        
+        if let newGenre = updatedUser.genre{
+            user.genre = newGenre
+        }
+        
         if let newWeight = updatedUser.weight{
             user.weight = newWeight
         }
@@ -173,6 +181,35 @@ struct UserController: RouteCollection {
         if let newCalByDay = updatedUser.calByDay{
             user.calByDay = newCalByDay
         }
+        
+        if let newObjLipides = updatedUser.objLipides{
+            user.objLipides = newObjLipides
+        }
+        
+        if let newObjProtein = updatedUser.objProtein{
+            user.objProtein = newObjProtein
+        }
+        
+        if let newGlucides = updatedUser.objGlucides{
+            user.objGlucides = newGlucides
+        }
+        
+        if let newFrequence = updatedUser.frequenceEntrainement{
+            user.frequenceEntrainement = newFrequence
+        }
+
+        if let newMinProgression = updatedUser.minProgression{
+            user.minProgression = newMinProgression
+        }
+        
+        if let newTimingProgression = updatedUser.timingProgression{
+            user.timingProgression = newTimingProgression
+        }
+        
+        if let newOnboard = updatedUser.isOnBoardCompleted{
+            user.isOnBoardCompleted = newOnboard
+        }
+
         
         try await user.save(on: req.db)
         

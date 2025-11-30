@@ -73,6 +73,30 @@ final class User: Model, @unchecked Sendable, Content {
     @Field(key: "calByDay")
     var calByDay: Int
     
+    @Field(key: "genre")
+    var genre: String
+    
+    @Field(key: "objLipides")
+    var objLipides: Int
+    
+    @Field(key: "objGlucides")
+    var objGlucides: Int
+    
+    @Field(key: "objProtein")
+    var objProtein: Int
+    
+    @Field(key: "frequenceEntrainement")
+    var frequenceEntrainement: Int
+    
+    @Field(key: "minProgression")
+    var minProgression: Int
+    
+    @Field(key: "timingProgression")
+    var timingProgression: String
+    
+    @Field(key: "isOnBoardCompleted")
+    var isOnBoardCompleted: Bool
+    
     @Children(for: \.$user) var diets: [Diet]
     @Children(for: \.$user) var meals: [Meal]
     @Children(for: \.$user) var physiqueActivitys: [PhysiqueActivity]
@@ -108,6 +132,15 @@ final class User: Model, @unchecked Sendable, Content {
             timingTraining: self.timingTraining,
             nbTraining: self.nbTraining,
             trainingDuration: self.trainingDuration,
-            calByDay: self.calByDay)
+            calByDay: self.calByDay,
+            genre: self.genre,
+            objLipides: self.objLipides,
+            objProtein: self.objProtein,
+            objGlucides: self.objGlucides,
+            frequenceEntrainement: self.frequenceEntrainement,
+            minProgression: self.minProgression,
+            timingProgression: self.timingProgression,
+            isOnBoardCompleted: self.isOnBoardCompleted
+        )
     }
 }

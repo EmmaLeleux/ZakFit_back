@@ -37,6 +37,14 @@ struct CreateUserDTO: Content{
         model.nbTraining = 0
         model.trainingDuration = 30
         model.calByDay = 1000
+        model.genre = "femme"
+        model.objLipides = 0
+        model.objGlucides = 0
+        model.objProtein = 0
+        model.frequenceEntrainement = 3
+        model.minProgression = 100
+        model.timingProgression = "1 semaine"
+        model.isOnBoardCompleted = false
         return model
     }
     
@@ -62,7 +70,15 @@ struct UpdateUserDTO: Content{
     var nbTraining: Int?
     var trainingDuration: Int?
     var calByDay: Int?
-    
+    var genre: String?
+    var objLipides: Int?
+    var objProtein: Int?
+    var objGlucides: Int?
+    var frequenceEntrainement: Int?
+    var minProgression: Int?
+    var timingProgression: String?
+    var isOnBoardCompleted: Bool?
+    var birthday: Date?
     
 }
 
@@ -87,6 +103,14 @@ struct UserResponseDTO: Content{
     var nbTraining: Int
     var trainingDuration: Int
     var calByDay: Int
+    var genre: String
+    var objLipides: Int
+    var objProtein: Int
+    var objGlucides: Int
+    var frequenceEntrainement: Int
+    var minProgression: Int
+    var timingProgression: String
+    var isOnBoardCompleted: Bool
     
     
 }
