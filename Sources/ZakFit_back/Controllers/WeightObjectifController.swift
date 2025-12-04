@@ -41,14 +41,17 @@ struct WeightObjectifController: RouteCollection {
     }
     
     @Sendable
-    func getWeightsByUser(req: Request) async throws -> [WeightObjectifResponseDTO] {
+    func getWeightsByUser(req: Request) async throws -> WeightObjectifResponseDTO {
         let payload = try req.auth.require(UserPayload.self)
-
-        let weights = try await WeightObjectif.query(on: req.db)
-            .filter(\.$user.$id == payload.id)
-            .all()
         
-        return weights.map{$0.toDTO()}
+        guard let weight = try await WeightObjectif.query(on: req.db)
+            .filter(\.$user.$id == payload.id)
+            .first()
+        else {
+            throw Abort(.notFound, reason: "Aucun weight objectif pour cet utilisateur")
+        }
+        
+        return weight.toDTO()
     }
     
     @Sendable

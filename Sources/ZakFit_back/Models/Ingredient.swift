@@ -38,7 +38,7 @@ final class Ingredient: Model, @unchecked Sendable, Content {
     init() {}
     
     
-    func toDTO() -> IngredientResponseDTO{
+    func toDTO(quantity: Int? = nil) -> IngredientResponseDTO{
         return IngredientResponseDTO(
             id: id ?? UUID(),
             name: name,
@@ -46,6 +46,7 @@ final class Ingredient: Model, @unchecked Sendable, Content {
             carbonhydrate: carbonhydrate,
             protein: protein,
             glucide: glucide,
-            unit: unit)
+            unit: unit,
+        quantity: quantity)
     }
 }

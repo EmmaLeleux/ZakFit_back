@@ -19,7 +19,6 @@ struct CreateIngredientDTO: Content{
     
     func toModel() -> Ingredient {
         let model = Ingredient()
-        model.id = UUID()
         model.name = name
         model.cal = cal
         model.carbonhydrate = carbonhydrate
@@ -39,4 +38,5 @@ struct IngredientResponseDTO: Content {
     var protein: Int
     var glucide: Int
     var unit: String
+    var quantity: Int?
 }

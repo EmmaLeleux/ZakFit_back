@@ -32,10 +32,39 @@ final class Meal: Model, @unchecked Sendable, Content {
     init() {}
     
     
-    func toDTO() -> MealResponseDTO{
+    func toDTO(on db: any Database) async throws -> MealResponseDTO {
+        try await $ingredients.load(on: db)
+        
+        var totalCalories = 0
+        var totalLipides = 0
+        var totalProteines = 0
+        var totalGlucides = 0
+        var ingredientsDTO: [IngredientResponseDTO] = []
+        for ingredient in ingredients {
+            guard let ingredientMeal = try await IngredientMeal.query(on: db)
+                .filter(\.$meal.$id == self.requireID())
+                .filter(\.$ingredient.$id == ingredient.requireID())
+                .first()
+            else {
+                throw Abort(.notFound)
+            }
+            
+            totalCalories += ingredientMeal.quantity / (ingredient.unit == "100g" ? 100 : 1) * ingredient.cal
+            totalLipides += ingredientMeal.quantity / (ingredient.unit == "100g" ? 100 : 1) * ingredient.carbonhydrate
+            totalProteines += ingredientMeal.quantity / (ingredient.unit == "100g" ? 100 : 1) * ingredient.protein
+            totalGlucides += ingredientMeal.quantity / (ingredient.unit == "100g" ? 100 : 1) * ingredient.glucide
+            ingredientsDTO.append(ingredient.toDTO(quantity: ingredientMeal.quantity))
+        }
+        
         return MealResponseDTO(
             id: id ?? UUID(),
             type: type,
-            date: date)
+            date: date,
+            ingredients: ingredientsDTO,
+            totalCalories: totalCalories,
+            totalLipides: totalLipides,
+            totalProteines: totalProteines,
+            totalGlucides: totalGlucides
+        )
     }
 }

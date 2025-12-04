@@ -23,8 +23,17 @@ struct CreateMealDTO: Content{
     }
 }
 
+struct UpdateMealDTO: Content{
+    var type: String?
+}
+
 struct MealResponseDTO: Content {
     var id: UUID
     var type: String
     var date: Date
+    var ingredients: [IngredientResponseDTO]
+    var totalCalories: Int
+    var totalLipides: Int
+    var totalProteines: Int
+    var totalGlucides: Int
 }

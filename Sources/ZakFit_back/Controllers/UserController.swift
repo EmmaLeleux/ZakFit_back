@@ -26,6 +26,7 @@ struct UserController: RouteCollection {
         let protectedRoutes = user.grouped(JWTMiddleware())
         protectedRoutes.patch(use: self.updateUser)
         protectedRoutes.delete(use: deleteUser)
+        protectedRoutes.get("me", use: getMyUser)
         
         
       
@@ -45,6 +46,17 @@ struct UserController: RouteCollection {
             return users.map { $0.toDTO() }
     }
     
+    
+    @Sendable
+    func getMyUser(req: Request) async throws -> UserResponseDTO {
+        let payload = try req.auth.require(UserPayload.self)
+        
+        guard let user = try await User.query(on: req.db).filter(\.$id == payload.id).first() else {
+            throw Abort(.notFound, reason: "User not found")
+        }
+        
+        return user.toDTO()
+    }
     
     @Sendable
     func createUser(req: Request) async throws -> LoginResponse {

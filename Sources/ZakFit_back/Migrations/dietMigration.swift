@@ -12,7 +12,7 @@ struct DietMigration : AsyncMigration {
         try await database.schema("diet")
             .id()
             .field("name", .string, .required)
-            .field("user_id", .uuid, .required, .references("user", "id"))
+            .field("user_id", .uuid, .required, .references("user", "id", onDelete: .cascade))
             .create()
     }
 

@@ -13,7 +13,7 @@ struct WeightMigration : AsyncMigration {
             .id()
             .field("weight", .double, .required)
             .field("date", .date, .required)
-            .field("user_id", .uuid, .required, .references("user", "id"))
+            .field("user_id", .uuid, .required, .references("user", "id", onDelete: .cascade))
             .create()
     }
 

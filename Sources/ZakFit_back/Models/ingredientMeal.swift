@@ -29,13 +29,12 @@ final class IngredientMeal: Model, @unchecked Sendable, Content {
     init() {}
     
     
-    func toDTO() -> IngredientMealResponseDTO{
+    func toDTO() -> IngredientMealResponseDTO {
         return IngredientMealResponseDTO(
             id: id ?? UUID(),
             quantity: quantity,
-            mealId: meal.id ?? UUID(),
-            ingredientId: ingredient.id ?? UUID())
-
-        
+            mealId: $meal.id,          
+            ingredientId: $ingredient.id
+        )
     }
 }

@@ -15,7 +15,7 @@ struct WeightObjectifMigration : AsyncMigration {
             .field("timing", .string, .required)
             .field("startDate", .date, .required)
             .field("finalDate", .date, .required)
-            .field("user_id", .uuid, .required, .references("user", "id"))
+            .field("user_id", .uuid, .required, .references("user", "id", onDelete: .cascade))
             .create()
     }
 

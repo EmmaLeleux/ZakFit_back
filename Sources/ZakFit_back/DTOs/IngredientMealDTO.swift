@@ -16,11 +16,9 @@ struct CreateIngredientMealDTO: Content{
     
     func toModel() -> IngredientMeal {
         let model = IngredientMeal()
-        model.id = UUID()
-        model.meal.id = mealId
-        model.ingredient.id = ingredientId
         model.quantity = quantity
-        
+        model.$meal.id = mealId
+        model.$ingredient.id = ingredientId
         return model
     }
     
