@@ -114,3 +114,12 @@ struct UserResponseDTO: Content{
     
     
 }
+
+
+struct UpdateUserInfoDTO: Content{
+    var email: String?
+    var mdpActuel: String?
+    var newMdp: String?
+    var firtsname: String?
+    var lastname: String?
+}

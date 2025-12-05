@@ -22,6 +22,7 @@ struct PhysiqueActivityController: RouteCollection {
         protectedRoutes.post(use: self.createPhysiqueActivity)
         protectedRoutes.delete(":id", use: deleteActivity)
         protectedRoutes.get(use: self.getActivityByUser)
+        protectedRoutes.get("date", use: getActivityByDate)
    
         
     }
@@ -46,6 +47,35 @@ struct PhysiqueActivityController: RouteCollection {
 
         let activity = try await PhysiqueActivity.query(on: req.db)
             .filter(\.$user.$id == payload.id)
+            .all()
+        
+        return activity.map{$0.toDTO()}
+    }
+    
+    @Sendable
+    func getActivityByDate(req: Request) async throws -> [PhysiqueActivityResponseDTO] {
+        let payload = try req.auth.require(UserPayload.self)
+
+        guard let dateString = try? req.query.get(String.self, at: "date") else {
+            throw Abort(.badRequest, reason: "date manquante")
+        }
+        
+     
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        guard let day = formatter.date(from: dateString) else {
+            throw Abort(.badRequest, reason: "date invalide")
+        }
+        
+
+        let calendar = Calendar.current
+        let startOfDay = calendar.startOfDay(for: day)
+        let endOfDay = calendar.date(byAdding: .day, value: 1, to: startOfDay)!
+        
+        let activity = try await PhysiqueActivity.query(on: req.db)
+            .filter(\.$user.$id == payload.id)
+            .filter(\.$date >= startOfDay)
+            .filter(\.$date < endOfDay)
             .all()
         
         return activity.map{$0.toDTO()}

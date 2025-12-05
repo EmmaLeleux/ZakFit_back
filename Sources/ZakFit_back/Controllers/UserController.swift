@@ -27,6 +27,7 @@ struct UserController: RouteCollection {
         protectedRoutes.patch(use: self.updateUser)
         protectedRoutes.delete(use: deleteUser)
         protectedRoutes.get("me", use: getMyUser)
+        protectedRoutes.patch("infos", use: updateUserInfo)
         
         
       
@@ -228,6 +229,46 @@ struct UserController: RouteCollection {
         return user.toDTO()
     }
     
+    
+    @Sendable
+    func updateUserInfo(_ req: Request) async throws -> UserResponseDTO {
+        let payload = try req.auth.require(UserPayload.self)
+        
+        guard let user = try await User.query(on: req.db).filter(\.$id == payload.id).first() else {
+            throw Abort(.notFound, reason: "User not found")
+        }
+        
+        let updatedUser = try req.content.decode(UpdateUserInfoDTO.self)
+        
+        if let newMdp = updatedUser.newMdp{
+            guard try Bcrypt.verify(updatedUser.mdpActuel ?? "", created: user.password) else {
+                throw Abort(.unauthorized, reason: "Password incorect")
+            }
+        }
+        
+        
+        if let newLastname = updatedUser.lastname {
+            user.lastname = newLastname
+        }
+        
+        if let newFirstname = updatedUser.firtsname{
+            user.firstname = newFirstname
+        }
+        
+        if let newEmail = updatedUser.email{
+            user.email = newEmail
+        }
+        
+        if let newPassword = updatedUser.newMdp{
+            user.password = try Bcrypt.hash(newPassword)
+        }
+        
+       
+        
+        try await user.save(on: req.db)
+        
+        return user.toDTO()
+    }
     @Sendable
     func deleteUser(_ req: Request) async throws -> HTTPStatus {
         
